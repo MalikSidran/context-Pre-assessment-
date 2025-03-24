@@ -20,7 +20,9 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{children: React.ReactNode}> = ({children}) => {
+export const AuthProvider: React.FC<{children: React.ReactNode}> = ({
+  children,
+}) => {
   const [user, setUser] = useState<{name: string; email: string} | null>(null);
 
   useEffect(() => {
@@ -32,42 +34,57 @@ export const AuthProvider: React.FC<{children: React.ReactNode}> = ({children}) 
   }, []);
 
   const login = async (email: string, password: string) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (email == '' || email == undefined || email == null || email == ' ') {
+      Alert.alert('', 'Please Enter Email');
+      return;
+    } else if (!emailRegex.test(email)) {
+      Alert.alert('', 'Please Enter Valid Email');
+      return;
+    } else if (!password || password.length < 6) {
+      Alert.alert('', 'Password atleast 6 characters');
+      return;
+    }
     const storedUser = await AsyncStorage.getItem('user');
+    console.log('storedUser:::', storedUser);
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       if (parsedUser.email === email && parsedUser.password === password) {
         setUser(parsedUser);
-        Alert.alert('Login Successful');
+        Alert.alert('', 'Login Successful');
       } else {
-        Alert.alert('Invalid credentials');
+        Alert.alert('', 'Invalid credentials');
       }
     } else {
-      Alert.alert('No user found');
+      Alert.alert('', 'No user found please signup');
     }
   };
 
   const signup = async (name: string, email: string, password: string) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!name) {
-      Alert.alert('Please Enter Name');
+      Alert.alert('', 'Please Enter Name');
       return;
     }
-    else if ( !email) {
-      Alert.alert('Please Enter Email');
+    if (email == '' || email == undefined || email == null || email == ' ') {
+      Alert.alert('', 'Please Enter Email');
       return;
-    }
-    else if ( password.length < 6) {
-      Alert.alert('Password minimum length must be 6');
+    } else if (!emailRegex.test(email)) {
+      Alert.alert('', 'Please Enter Valid Email');
+      return;
+    } else if (!password || password.length < 6) {
+      Alert.alert('', 'Password atleast 6 characters');
       return;
     }
     const newUser = {name, email, password};
     await AsyncStorage.setItem('user', JSON.stringify(newUser));
     setUser(newUser);
-    Alert.alert('Signup Successful');
+    Alert.alert('', 'Signup Successful');
   };
 
   const logout = async () => {
     setUser(null);
-    await AsyncStorage.removeItem('user');
+    // await AsyncStorage.removeItem('user');
   };
 
   return (

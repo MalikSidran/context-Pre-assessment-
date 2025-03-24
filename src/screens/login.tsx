@@ -1,15 +1,12 @@
-import React, {createContext, useContext, useState, useEffect} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import React, { useState} from 'react';
 import {
   View,
   Text,
   TextInput,
-  Button,
   Alert,
   TouchableOpacity,
   Image,
   StyleSheet,
-  ScrollView,
 } from 'react-native';
 import {useAuth} from '../context/authContext';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -53,11 +50,11 @@ const LoginScreen = ({navigation}: any) => {
             />
             <TextInput
               style={styles.input}
+              placeholderTextColor="#ccc"
               placeholder="Password"
               secureTextEntry
-              // onChangeText={handleChange('password')}
-              // onBlur={handleBlur('password')}
-              // value={values.password}
+              onChangeText={(val)=>setPassword(val)}
+              value={password}
             />
           </View>
 
@@ -125,6 +122,8 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     height: '100%',
+    fontSize:18,
+    color:'black'
   },
   forgotPassword: {
     alignSelf: 'flex-end',

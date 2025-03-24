@@ -1,7 +1,4 @@
-import React, {createContext, useContext, useState, useEffect} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -37,10 +34,10 @@ const SignupScreen = ({navigation}: any) => {
           source={require('../assets/images/Home.png')}
           style={styles.logo}
         />
-        <Text style={styles.title}>Sign up</Text>
+        <Text style={styles.title}>Sign Up</Text>
 
         <>
-        <View style={styles.inputContainer}>
+          <View style={styles.inputContainer}>
             <Image
               source={require('../assets/images/user.png')}
               style={styles.emailIcon}
@@ -50,7 +47,7 @@ const SignupScreen = ({navigation}: any) => {
               placeholder="Name"
               placeholderTextColor="#ccc"
               value={name}
-              onChangeText={(val)=>setName(val)}
+              onChangeText={val => setName(val)}
               autoCapitalize="none"
             />
           </View>
@@ -79,7 +76,8 @@ const SignupScreen = ({navigation}: any) => {
               style={styles.input}
               placeholder="Password"
               secureTextEntry
-              onChangeText={(val)=>setPassword(val)}
+              placeholderTextColor="#ccc"
+              onChangeText={val => setPassword(val)}
               value={password}
             />
           </View>
@@ -87,8 +85,7 @@ const SignupScreen = ({navigation}: any) => {
           <TouchableOpacity
             onPress={() => {
               Alert.alert('No Forget Screen');
-            }}>
-          </TouchableOpacity>
+            }}></TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
             onPress={() => signup(name, email, password)}>
@@ -104,21 +101,6 @@ const SignupScreen = ({navigation}: any) => {
       </View>
     </KeyboardAwareScrollView>
   );
-
-  // return (
-  //   <View>
-  //     <Text>Name:</Text>
-  //     <TextInput value={name} onChangeText={setName} />
-  //     <Text>Email:</Text>
-  //     <TextInput value={email} onChangeText={setEmail} />
-  //     <Text>Password:</Text>
-  //     <TextInput value={password} onChangeText={setPassword} secureTextEntry />
-  //     <Button title="Signup" onPress={() => signup(name, email, password)} />
-  //     <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-  //       <Text>Go to Login</Text>
-  //     </TouchableOpacity>
-  //   </View>
-  // );
 };
 
 const styles = StyleSheet.create({
@@ -162,7 +144,8 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     height: '100%',
-    fontSize:18,
+    fontSize: 18,
+    color: 'black',
   },
   forgotPassword: {
     alignSelf: 'flex-end',

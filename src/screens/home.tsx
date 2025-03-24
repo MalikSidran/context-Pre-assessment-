@@ -16,8 +16,8 @@ const HomeScreen = () => {
   const {user, logout} = useAuth();
   return (
     <View style={{flex:1,justifyContent:'center',alignItems:"center"}}>
-      <Text>Welcome, {user?.name}</Text>
-      <Text>Email: {user?.email}</Text>
+      <Text style={{color:'black',marginTop:16}}>Welcome, {user?.name}</Text>
+      <Text style={{color:'black',marginVertical:8,}}>Email: {user?.email}</Text>
       <Button title="Logout" onPress={logout} />
     </View>
   );
